@@ -1,0 +1,9 @@
+services:
+  turtlebot3:
+    container_name: sim
+    build:
+      context: .
+    environment:
+      - TURTLEBOT3_MODEL=burger
+    stdin_open: true
+    tty: true
