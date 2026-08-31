@@ -5,5 +5,7 @@ services:
       context: .
     environment:
       - TURTLEBOT3_MODEL=burger
+    ports:
+      - "6080:6080"
     stdin_open: true
     tty: true
