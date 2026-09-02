@@ -13,6 +13,17 @@
 # limitations under the License.
 #
 # Author: Darby Lim
+#
+# Vendored from ros-humble-turtlebot3-navigation2 (apt) into this repo's
+# colcon overlay so it can be version-controlled and modified -- see
+# turtlebot3_ws/src/turtlebot3_navigation2/. Only change vs. upstream: this
+# package vendors and installs param/ (see CMakeLists.txt), but intentionally
+# doesn't vendor map/rviz (to keep the image build light). So map_dir and
+# rviz_config_dir below point at the apt package's share dir directly,
+# while param_dir still resolves through
+# get_package_share_directory('turtlebot3_navigation2') -- which, once this
+# overlay is built, hits this package's vendored param/ dir. Everything
+# else is unmodified upstream.
 
 import os
 
@@ -27,14 +38,16 @@ from launch_ros.actions import Node
 TURTLEBOT3_MODEL = os.environ["TURTLEBOT3_MODEL"]
 ROS_DISTRO = os.environ.get("ROS_DISTRO")
 
+# Stock upstream resolves these via get_package_share_directory('turtlebot3_navigation2');
+# pinned to the apt package's install path instead -- see module docstring above.
+TURTLEBOT3_NAVIGATION2_APT_SHARE_DIR = "/opt/ros/humble/share/turtlebot3_navigation2"
+
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default="false")
     map_dir = LaunchConfiguration(
         "map",
-        default=os.path.join(
-            get_package_share_directory("turtlebot3_navigation2"), "map", "map.yaml"
-        ),
+        default=os.path.join(TURTLEBOT3_NAVIGATION2_APT_SHARE_DIR, "map", "map.yaml"),
     )
 
     param_file_name = TURTLEBOT3_MODEL + ".yaml"
@@ -63,7 +76,7 @@ def generate_launch_description():
     )
 
     rviz_config_dir = os.path.join(
-        get_package_share_directory("turtlebot3_navigation2"),
+        TURTLEBOT3_NAVIGATION2_APT_SHARE_DIR,
         "rviz",
         "tb3_navigation2.rviz",
     )
