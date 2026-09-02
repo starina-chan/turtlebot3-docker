@@ -16,9 +16,15 @@ ENV DISPLAY=:1
 # disable gazebo sound device
 ENV ALSOFT_DRIVERS=null
 
+COPY turtlebot3_ws /turtlebot3_ws
+RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
+    && cd /turtlebot3_ws \
+    && colcon build --packages-select turtlebot3_navigation2"
+
 RUN { \
       echo "source /opt/ros/humble/setup.bash"; \
       echo "source /usr/share/gazebo-11/setup.sh"; \
+      echo "source /turtlebot3_ws/install/setup.bash"; \
     } >> /root/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh

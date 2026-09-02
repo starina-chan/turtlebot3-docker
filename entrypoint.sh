@@ -6,6 +6,7 @@ source /opt/ros/humble/setup.bash
 # sun, ...) from packages on disk instead of the EOL online model DB --
 # without this, world load hangs on that network call.
 source /usr/share/gazebo-11/setup.sh
+source /turtlebot3_ws/install/setup.bash
 
 Xvfb $DISPLAY -screen 0 1280x800x24 &
 
