@@ -21,10 +21,12 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && cd /turtlebot3_ws \
     && colcon build --symlink-install"
 
+COPY functions.sh /root/functions.sh
 RUN { \
       echo "source /opt/ros/humble/setup.bash"; \
       echo "source /usr/share/gazebo-11/setup.sh"; \
       echo "source /turtlebot3_ws/install/setup.bash"; \
+      echo "source /root/functions.sh"; \
     } >> /root/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh
