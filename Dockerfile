@@ -19,7 +19,7 @@ ENV ALSOFT_DRIVERS=null
 COPY turtlebot3_ws /turtlebot3_ws
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && cd /turtlebot3_ws \
-    && colcon build --packages-select turtlebot3_navigation2"
+    && colcon build --symlink-install"
 
 RUN { \
       echo "source /opt/ros/humble/setup.bash"; \
